@@ -6,22 +6,17 @@ import { Pagination } from './components/Pagination';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const items = getNumbers(1, 42).map(n => `Item ${n}`);
 const total = items.length;
-const pages: number[] = [];
 
 export const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
-  const [totalPages, setTotalPages] = useState(Math.ceil(total / 5));
-
-  pages.length = 0;
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(i);
-  }
+  let totalPages = Math.ceil(total / perPage);
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const setPages = (value: number) => {
     setCurrentPage(1);
     setPerPage(value);
-    setTotalPages(Math.ceil(total / value));
+    totalPages = Math.ceil(total / value);
   };
 
   return (
@@ -29,8 +24,8 @@ export const App: React.FC = () => {
       <h1>Items with Pagination</h1>
 
       <p className="lead" data-cy="info">
-        Page {currentPage} items {(currentPage - 1) * perPage + 1}-{' '}
-        {Math.min(currentPage * perPage, total)} of {total}
+        Page {currentPage} (items {(currentPage - 1) * perPage + 1} -{' '}
+        {Math.min(currentPage * perPage, total)} of {total})
       </p>
 
       <div className="form-group row">
@@ -74,7 +69,7 @@ export const App: React.FC = () => {
 
             return (
               <li key={index} data-cy="item">
-                Item {value}
+                {value}
               </li>
             );
           })}

@@ -35,24 +35,24 @@ export const Pagination: React.FC<Props> = ({
           «
         </a>
       </li>
-      {pagesAmount.map((page, index) => {
+      {pagesAmount.map(page => {
         return (
           <li
-            key={index}
+            key={page}
             className={`page-item ${page === currentPage && 'active'}`}
           >
             <a
               data-cy="pageLink"
               className="page-link"
-              href={`#${index + 1}`}
+              href={`#${page + 1}`}
               onClick={e => {
                 e.preventDefault();
                 if (page !== currentPage) {
-                  onPageChange(index + 1);
+                  onPageChange(page);
                 }
               }}
             >
-              {index + 1}
+              {page}
             </a>
           </li>
         );
@@ -65,7 +65,8 @@ export const Pagination: React.FC<Props> = ({
           href="#next"
           // aria-disabled="false
           aria-disabled={currentPage < numberOfPages ? 'false' : 'true'}
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault();
             if (currentPage < numberOfPages) {
               onPageChange(currentPage + 1);
             }
