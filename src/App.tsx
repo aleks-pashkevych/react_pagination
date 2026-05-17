@@ -67,15 +67,17 @@ export const App: React.FC = () => {
         }}
       />
       <ul>
-        {pages.map((item, index) => {
-          const value = item;
+        {items
+          .slice(currentPage * perPage - perPage, currentPage * perPage)
+          .map((item, index) => {
+            const value = item;
 
-          return (
-            <li key={index} data-cy="item">
-              Item {value}
-            </li>
-          );
-        })}
+            return (
+              <li key={index} data-cy="item">
+                Item {value}
+              </li>
+            );
+          })}
       </ul>
     </div>
   );

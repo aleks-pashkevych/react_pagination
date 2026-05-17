@@ -7,12 +7,14 @@ type Props = {
 };
 
 export const Pagination: React.FC<Props> = ({
+  total,
   currentPage,
   pages,
+  perPage,
   onPageChange,
 }) => {
   const pagesAmount = pages;
-  const numberOfPages = pages.length;
+  const numberOfPages = Math.ceil(total / perPage);
 
   return (
     <ul className="pagination">
@@ -25,7 +27,9 @@ export const Pagination: React.FC<Props> = ({
           aria-disabled={currentPage < 2 && 'true'}
           onClick={e => {
             e.preventDefault();
-            onPageChange(currentPage - 1);
+            if (currentPage > 1) {
+              onPageChange(currentPage - 1);
+            }
           }}
         >
           «
@@ -43,7 +47,9 @@ export const Pagination: React.FC<Props> = ({
               href={`#${index + 1}`}
               onClick={e => {
                 e.preventDefault();
-                onPageChange(index + 1);
+                if (page !== currentPage) {
+                  onPageChange(index + 1);
+                }
               }}
             >
               {index + 1}
