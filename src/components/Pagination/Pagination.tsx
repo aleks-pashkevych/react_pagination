@@ -23,7 +23,8 @@ export const Pagination: React.FC<Props> = ({
           href="#prev"
           // aria-disabled="true"
           aria-disabled={currentPage < 2 && 'true'}
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault();
             onPageChange(currentPage - 1);
           }}
         >
@@ -40,7 +41,8 @@ export const Pagination: React.FC<Props> = ({
               data-cy="pageLink"
               className="page-link"
               href={`#${index + 1}`}
-              onClick={() => {
+              onClick={e => {
+                e.preventDefault();
                 onPageChange(index + 1);
               }}
             >
