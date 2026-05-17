@@ -7,96 +7,65 @@ type Props = {
 };
 
 export const Pagination: React.FC<Props> = ({
-  total,
   currentPage,
   pages,
-  perPage,
   onPageChange,
 }) => {
   const pagesAmount = pages;
   const numberOfPages = pages.length;
 
-  function getPageItems() {
-    const list = [];
-
-    if (currentPage < total) {
-      for (let i = currentPage; i < currentPage + perPage; i++) {
-        list.push(i);
-      }
-    }
-
-    return list;
-  }
-
-  const pageItems = getPageItems();
-
   return (
-    <>
-      <ul className="pagination">
-        <li className={`page-item ${currentPage < 2 && 'disabled'}`}>
-          <a
-            data-cy="prevLink"
-            className="page-link"
-            href="#prev"
-            // aria-disabled="true"
-            aria-disabled={currentPage < 2 && 'true'}
-            onClick={() => {
-              onPageChange(currentPage - 1);
-            }}
-          >
-            «
-          </a>
-        </li>
-        {pagesAmount.map((page, index) => {
-          return (
-            <li
-              key={index}
-              className={`page-item ${page === currentPage && 'active'}`}
-            >
-              <a
-                data-cy="pageLink"
-                className="page-link"
-                href={`#${index + 1}`}
-                onClick={() => {
-                  onPageChange(index + 1);
-                }}
-              >
-                {index + 1}
-              </a>
-            </li>
-          );
-        })}
-
-        <li
-          className={`page-item ${currentPage >= numberOfPages && 'disabled'}`}
+    <ul className="pagination">
+      <li className={`page-item ${currentPage < 2 && 'disabled'}`}>
+        <a
+          data-cy="prevLink"
+          className="page-link"
+          href="#prev"
+          // aria-disabled="true"
+          aria-disabled={currentPage < 2 && 'true'}
+          onClick={() => {
+            onPageChange(currentPage - 1);
+          }}
         >
-          <a
-            data-cy="nextLink"
-            className="page-link"
-            href="#next"
-            // aria-disabled="false
-            aria-disabled={currentPage < numberOfPages ? 'false' : 'true'}
-            onClick={() => {
-              if (currentPage < numberOfPages) {
-                onPageChange(currentPage + 1);
-              }
-            }}
+          «
+        </a>
+      </li>
+      {pagesAmount.map((page, index) => {
+        return (
+          <li
+            key={index}
+            className={`page-item ${page === currentPage && 'active'}`}
           >
-            »
-          </a>
-        </li>
-      </ul>
-      <ul>
-        {pageItems.map((item, index) => {
-          const value = item;
+            <a
+              data-cy="pageLink"
+              className="page-link"
+              href={`#${index + 1}`}
+              onClick={() => {
+                onPageChange(index + 1);
+              }}
+            >
+              {index + 1}
+            </a>
+          </li>
+        );
+      })}
 
-          return (
-            <li key={index} data-cy="item">
-              Item {value}
-            </li>
-          );
-        })}
-      </ul>
-    </>
+      <li className={`page-item ${currentPage >= numberOfPages && 'disabled'}`}>
+        <a
+          data-cy="nextLink"
+          className="page-link"
+          href="#next"
+          // aria-disabled="false
+          aria-disabled={currentPage < numberOfPages ? 'false' : 'true'}
+          onClick={() => {
+            if (currentPage < numberOfPages) {
+              onPageChange(currentPage + 1);
+            }
+          }}
+        >
+          »
+        </a>
+      </li>
+    </ul>
   );
 };

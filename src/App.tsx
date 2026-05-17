@@ -29,7 +29,7 @@ export const App: React.FC = () => {
       <h1>Items with Pagination</h1>
 
       <p className="lead" data-cy="info">
-        Page {currentPage} items {(currentPage - 1) * perPage + 1} -{' '}
+        Page {currentPage} items {(currentPage - 1) * perPage + 1}-{' '}
         {Math.min(currentPage * perPage, total)} of {total}
       </p>
 
@@ -66,6 +66,17 @@ export const App: React.FC = () => {
           setCurrentPage(page);
         }}
       />
+      <ul>
+        {pages.map((item, index) => {
+          const value = item;
+
+          return (
+            <li key={index} data-cy="item">
+              Item {value}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
