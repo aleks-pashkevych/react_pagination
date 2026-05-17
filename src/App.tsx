@@ -5,7 +5,6 @@ import { Pagination } from './components/Pagination';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const items = getNumbers(1, 42).map(n => `Item ${n}`);
-// const perPage: number = 5;
 const total = items.length;
 const pages: number[] = [];
 
@@ -14,12 +13,12 @@ export const App: React.FC = () => {
   const [perPage, setPerPage] = useState(5);
   const [totalPages, setTotalPages] = useState(Math.ceil(total / 5));
 
-  for (let i = 0; i < totalPages; i++) {
-    pages.push(i++);
+  pages.length = 0;
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
   }
 
   const setPages = (value: number) => {
-    pages.length = 0;
     setPerPage(value);
     setTotalPages(Math.ceil(total / value));
   };
@@ -29,7 +28,8 @@ export const App: React.FC = () => {
       <h1>Items with Pagination</h1>
 
       <p className="lead" data-cy="info">
-        Page 1 (items 1 - 5 of 42)
+        Page {currentPage} items {(currentPage - 1) * perPage + 1} -{' '}
+        {Math.min(currentPage * perPage, total)}
       </p>
 
       <div className="form-group row">
@@ -38,10 +38,11 @@ export const App: React.FC = () => {
             data-cy="perPageSelector"
             id="perPageSelector"
             className="form-control"
+            defaultValue={perPage}
           >
             <option
               value="3"
-              onClick={() => {
+              onChange={() => {
                 setPages(3);
               }}
             >
@@ -49,7 +50,7 @@ export const App: React.FC = () => {
             </option>
             <option
               value="5"
-              onClick={() => {
+              onChange={() => {
                 setPages(5);
               }}
             >
@@ -57,7 +58,7 @@ export const App: React.FC = () => {
             </option>
             <option
               value="10"
-              onClick={() => {
+              onChange={() => {
                 setPages(10);
               }}
             >
@@ -65,7 +66,7 @@ export const App: React.FC = () => {
             </option>
             <option
               value="20"
-              onClick={() => {
+              onChange={() => {
                 setPages(20);
               }}
             >
@@ -89,13 +90,6 @@ export const App: React.FC = () => {
           setCurrentPage(page);
         }}
       />
-      <ul>
-        <li data-cy="item">Item 1</li>
-        <li data-cy="item">Item 2</li>
-        <li data-cy="item">Item 3</li>
-        <li data-cy="item">Item 4</li>
-        <li data-cy="item">Item 5</li>
-      </ul>
     </div>
   );
 };
