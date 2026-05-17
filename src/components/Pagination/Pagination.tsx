@@ -14,6 +14,7 @@ export const Pagination: React.FC<Props> = ({
   onPageChange,
 }) => {
   const pagesAmount = pages;
+  const numberOfPages = pages.length;
 
   function getPageItems() {
     const list = [];
@@ -32,13 +33,13 @@ export const Pagination: React.FC<Props> = ({
   return (
     <>
       <ul className="pagination">
-        <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
+        <li className={`page-item ${currentPage < 2 && 'disabled'}`}>
           <a
             data-cy="prevLink"
             className="page-link"
             href="#prev"
             // aria-disabled="true"
-            aria-disabled={currentPage === 1 && 'true'}
+            aria-disabled={currentPage < 2 && 'true'}
             onClick={() => {
               onPageChange(currentPage - 1);
             }}
@@ -66,15 +67,17 @@ export const Pagination: React.FC<Props> = ({
           );
         })}
 
-        <li className={`page-item ${currentPage === total && 'disabled'}`}>
+        <li
+          className={`page-item ${currentPage >= numberOfPages && 'disabled'}`}
+        >
           <a
             data-cy="nextLink"
             className="page-link"
             href="#next"
-            // aria-disabled="false"
-            aria-disabled={currentPage === pages.length && 'true'}
+            // aria-disabled="false
+            aria-disabled={currentPage < numberOfPages ? 'false' : 'true'}
             onClick={() => {
-              if (currentPage < pages.length) {
+              if (currentPage < numberOfPages) {
                 onPageChange(currentPage + 1);
               }
             }}

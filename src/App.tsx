@@ -19,6 +19,7 @@ export const App: React.FC = () => {
   }
 
   const setPages = (value: number) => {
+    setCurrentPage(1);
     setPerPage(value);
     setTotalPages(Math.ceil(total / value));
   };
@@ -29,7 +30,7 @@ export const App: React.FC = () => {
 
       <p className="lead" data-cy="info">
         Page {currentPage} items {(currentPage - 1) * perPage + 1} -{' '}
-        {Math.min(currentPage * perPage, total)}
+        {Math.min(currentPage * perPage, total)} of {total}
       </p>
 
       <div className="form-group row">
@@ -39,39 +40,14 @@ export const App: React.FC = () => {
             id="perPageSelector"
             className="form-control"
             defaultValue={perPage}
+            onChange={e => {
+              setPages(Number(e.target.value));
+            }}
           >
-            <option
-              value="3"
-              onChange={() => {
-                setPages(3);
-              }}
-            >
-              3
-            </option>
-            <option
-              value="5"
-              onChange={() => {
-                setPages(5);
-              }}
-            >
-              5
-            </option>
-            <option
-              value="10"
-              onChange={() => {
-                setPages(10);
-              }}
-            >
-              10
-            </option>
-            <option
-              value="20"
-              onChange={() => {
-                setPages(20);
-              }}
-            >
-              20
-            </option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
           </select>
         </div>
 
